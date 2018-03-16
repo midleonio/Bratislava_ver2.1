@@ -1,0 +1,283 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: #999999; font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,128); font-weight: bold; }
+.s1 { color: rgb(0,0,0); }
+.s2 { color: rgb(128,128,128); font-style: italic; }
+.s3 { color: rgb(0,128,0); font-weight: bold; }
+.s4 { color: rgb(128,128,128); font-weight: bold; font-style: italic; }
+.s5 { color: rgb(0,0,255); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+MainActivity.java</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">package </span><span class="s1">sk.escapehouse.bratislava_ver2; 
+ 
+ 
+</span><span class="s0">import </span><span class="s1">android.content.Context; 
+</span><span class="s0">import </span><span class="s1">android.support.design.widget.TabLayout; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.app.AppCompatActivity; 
+</span><span class="s0">import </span><span class="s1">android.support.v7.widget.Toolbar; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.Fragment; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.FragmentManager; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.app.FragmentPagerAdapter; 
+</span><span class="s0">import </span><span class="s1">android.support.v4.view.ViewPager; 
+</span><span class="s0">import </span><span class="s1">android.os.Bundle; 
+</span><span class="s0">import </span><span class="s1">android.view.LayoutInflater; 
+</span><span class="s0">import </span><span class="s1">android.view.Menu; 
+</span><span class="s0">import </span><span class="s1">android.view.MenuItem; 
+</span><span class="s0">import </span><span class="s1">android.view.View; 
+</span><span class="s0">import </span><span class="s1">android.view.ViewGroup; 
+</span><span class="s0">import </span><span class="s1">android.widget.Button; 
+</span><span class="s0">import </span><span class="s1">android.widget.EditText; 
+</span><span class="s0">import </span><span class="s1">android.widget.Spinner; 
+</span><span class="s0">import </span><span class="s1">android.widget.TextView; 
+</span><span class="s0">import </span><span class="s1">android.widget.Toast; 
+ 
+</span><span class="s0">import </span><span class="s1">java.io.BufferedReader; 
+</span><span class="s0">import </span><span class="s1">java.io.FileInputStream; 
+</span><span class="s0">import </span><span class="s1">java.io.FileNotFoundException; 
+</span><span class="s0">import </span><span class="s1">java.io.FileOutputStream; 
+</span><span class="s0">import </span><span class="s1">java.io.IOException; 
+</span><span class="s0">import </span><span class="s1">java.io.InputStreamReader; 
+</span><span class="s0">import </span><span class="s1">java.util.List; 
+ 
+</span><span class="s0">import </span><span class="s1">sk.escapehouse.bratislava_ver2.R; 
+</span><span class="s0">import </span><span class="s1">sk.escapehouse.bratislava_ver2.Tab1; 
+</span><span class="s0">import </span><span class="s1">sk.escapehouse.bratislava_ver2.Tab2; 
+ 
+ 
+</span><span class="s0">public class </span><span class="s1">MainActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity { 
+ 
+    EditText editText; 
+    TextView textView; 
+    </span><span class="s0">private </span><span class="s1">CodeChecker expert = </span><span class="s0">new </span><span class="s1">CodeChecker(); 
+ 
+ 
+ 
+ 
+    </span><span class="s2">//Called when the button gets clicked</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">onClickCheckInput(View view) { 
+        </span><span class="s2">//Get a reference to the TextView</span><span class="s1"> 
+        TextView answerOnDisplay = (TextView) findViewById(R.id.answer); 
+        </span><span class="s2">//Get a reference to the Spinner</span><span class="s1"> 
+        Spinner numbers1 = (Spinner) findViewById(R.id.numbers1); 
+        </span><span class="s2">//Get the selected item in the Spinner</span><span class="s1"> 
+        String selectedNumber1 = String.valueOf(numbers1.getSelectedItem()); 
+ 
+        </span><span class="s2">//Get a reference to the Spinner</span><span class="s1"> 
+        Spinner numbers2 = (Spinner) findViewById(R.id.numbers2); 
+        </span><span class="s2">//Get the selected item in the Spinner</span><span class="s1"> 
+        String selectedNumber2 = String.valueOf(numbers2.getSelectedItem()); 
+ 
+        </span><span class="s2">//Get a reference to the Spinner</span><span class="s1"> 
+        Spinner numbers3 = (Spinner) findViewById(R.id.numbers3); 
+        </span><span class="s2">//Get the selected item in the Spinner</span><span class="s1"> 
+        String selectedNumber3 = String.valueOf(numbers3.getSelectedItem()); 
+ 
+        </span><span class="s2">//Display the selected item</span><span class="s1"> 
+        </span><span class="s2">//Get the answer from the CodeChecker class</span><span class="s1"> 
+        List&lt;String&gt; answersList = expert.getAnswer(selectedNumber1, selectedNumber2, selectedNumber3); 
+        StringBuilder answersFormatted = </span><span class="s0">new </span><span class="s1">StringBuilder(); 
+        </span><span class="s0">for </span><span class="s1">(String brand : answersList) { 
+            answersFormatted.append(brand).append(</span><span class="s3">'</span><span class="s0">\n</span><span class="s3">'</span><span class="s1">); 
+        } 
+        </span><span class="s2">//Display the answer</span><span class="s1"> 
+        answerOnDisplay.setText(answersFormatted); 
+ 
+    } 
+    </span><span class="s2">/** 
+     * The {</span><span class="s4">@link </span><span class="s2">android.support.v4.view.PagerAdapter} that will provide 
+     * fragments for each of the sections. We use a 
+     * {</span><span class="s4">@link </span><span class="s2">FragmentPagerAdapter} derivative, which will keep every 
+     * loaded fragment in memory. If this becomes too memory intensive, it 
+     * may be best to switch to a 
+     * {</span><span class="s4">@link </span><span class="s2">android.support.v4.app.FragmentStatePagerAdapter}. 
+     */</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">SectionsPagerAdapter mSectionsPagerAdapter; 
+ 
+    </span><span class="s2">/** 
+     * The {</span><span class="s4">@link </span><span class="s2">ViewPager} that will host the section contents. 
+     */</span><span class="s1"> 
+    </span><span class="s0">private </span><span class="s1">ViewPager mViewPager; 
+ 
+    @Override 
+    </span><span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) { 
+        </span><span class="s0">super</span><span class="s1">.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+ 
+        editText = (EditText) findViewById(R.id.tabItem1); 
+        textView = (TextView) findViewById(R.id.text_view); 
+        textView.setVisibility(View.GONE); 
+        editText.setText(</span><span class="s3">&quot;&quot;</span><span class="s1">); 
+ 
+ 
+ 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar); 
+        setSupportActionBar(toolbar); 
+        </span><span class="s2">// Create the adapter that will return a fragment for each of the three</span><span class="s1"> 
+        </span><span class="s2">// primary sections of the activity.</span><span class="s1"> 
+        mSectionsPagerAdapter = </span><span class="s0">new </span><span class="s1">SectionsPagerAdapter(getSupportFragmentManager()); 
+ 
+        </span><span class="s2">// Set up the ViewPager with the sections adapter.</span><span class="s1"> 
+        mViewPager = (ViewPager) findViewById(R.id.container); 
+        mViewPager.setAdapter(mSectionsPagerAdapter); 
+ 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs); 
+ 
+        mViewPager.addOnPageChangeListener(</span><span class="s0">new </span><span class="s1">TabLayout.TabLayoutOnPageChangeListener(tabLayout)); 
+        tabLayout.addOnTabSelectedListener(</span><span class="s0">new </span><span class="s1">TabLayout.ViewPagerOnTabSelectedListener(mViewPager)); 
+ 
+    } 
+ 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onCreateOptionsMenu(Menu menu) { 
+        </span><span class="s2">// Inflate the menu; this adds items to the action bar if it is present.</span><span class="s1"> 
+        getMenuInflater().inflate(R.menu.menu_main, menu); 
+        </span><span class="s0">return true</span><span class="s1">; 
+    } 
+ 
+    @Override 
+    </span><span class="s0">public boolean </span><span class="s1">onOptionsItemSelected(MenuItem item) { 
+        </span><span class="s2">// Handle action bar item clicks here. The action bar will</span><span class="s1"> 
+        </span><span class="s2">// automatically handle clicks on the Home/Up button, so long</span><span class="s1"> 
+        </span><span class="s2">// as you specify a parent activity in AndroidManifest.xml.</span><span class="s1"> 
+        </span><span class="s0">int </span><span class="s1">id = item.getItemId(); 
+ 
+        </span><span class="s2">//noinspection SimplifiableIfStatement</span><span class="s1"> 
+        </span><span class="s0">if </span><span class="s1">(id == R.id.action_settings) { 
+            </span><span class="s0">return true</span><span class="s1">; 
+        } 
+ 
+        </span><span class="s0">return super</span><span class="s1">.onOptionsItemSelected(item); 
+    } 
+    </span><span class="s2">//this writes the text from edit field to the file</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">saveProgress(View view){ 
+        String Message = editText.getText().toString(); 
+        System.getProperty(</span><span class="s3">&quot;line.separator&quot;</span><span class="s1">); 
+        String file_name = </span><span class="s3">&quot;save_file&quot;</span><span class="s1">; 
+        </span><span class="s0">try </span><span class="s1">(FileOutputStream fileOutputStream = openFileOutput(file_name, Context.MODE_APPEND)) { 
+            fileOutputStream.write(Message.getBytes()); 
+            fileOutputStream.close(); 
+            Toast.makeText(getApplicationContext(), </span><span class="s3">&quot;Message Saved&quot;</span><span class="s1">, Toast.LENGTH_LONG).show(); 
+        }</span><span class="s0">catch </span><span class="s1">(FileNotFoundException e){e.printStackTrace();} </span><span class="s0">catch </span><span class="s1">(IOException e) { 
+            e.printStackTrace(); 
+        } 
+        </span><span class="s2">// This turns off the Button after use</span><span class="s1"> 
+        </span><span class="s0">final </span><span class="s1">Button choice1 = (Button) findViewById(R.id.save_progress); 
+        choice1.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() { 
+            @Override 
+            </span><span class="s0">public void </span><span class="s1">onClick(View v) { 
+                choice1.setEnabled(</span><span class="s0">false</span><span class="s1">); 
+            } 
+ 
+        }); 
+    } 
+    </span><span class="s2">//this shows the content of the saved file on the screen</span><span class="s1"> 
+    </span><span class="s0">public void </span><span class="s1">showProgress(View view) { 
+        </span><span class="s0">try </span><span class="s1">{ 
+            String Message; 
+            FileInputStream fileInputStream = openFileInput(</span><span class="s3">&quot;save_file&quot;</span><span class="s1">); 
+            InputStreamReader inputStreamReader = </span><span class="s0">new </span><span class="s1">InputStreamReader(fileInputStream); 
+            BufferedReader bufferedReader = </span><span class="s0">new </span><span class="s1">BufferedReader(inputStreamReader); 
+            StringBuffer stringBuffer = </span><span class="s0">new </span><span class="s1">StringBuffer(); 
+            </span><span class="s0">while </span><span class="s1">((Message=bufferedReader.readLine())!=</span><span class="s0">null</span><span class="s1">) 
+            { 
+                stringBuffer.append(Message + </span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s1">); 
+ 
+            } 
+            textView.setText(stringBuffer.toString()); 
+            textView.setVisibility(View.VISIBLE); 
+        } 
+        </span><span class="s0">catch </span><span class="s1">(FileNotFoundException e) { 
+            e.printStackTrace(); 
+        } </span><span class="s0">catch </span><span class="s1">(IOException e) { 
+            e.printStackTrace(); 
+        } 
+ 
+    } 
+    </span><span class="s2">/** 
+     * A placeholder fragment containing a simple view. 
+     */</span><span class="s1"> 
+    </span><span class="s0">public static class </span><span class="s1">PlaceholderFragment </span><span class="s0">extends </span><span class="s1">Fragment { 
+        </span><span class="s2">/** 
+         * The fragment argument representing the section number for this 
+         * fragment. 
+         */</span><span class="s1"> 
+        </span><span class="s0">private static final </span><span class="s1">String ARG_SECTION_NUMBER = </span><span class="s3">&quot;section_number&quot;</span><span class="s1">; 
+ 
+        </span><span class="s0">public </span><span class="s1">PlaceholderFragment() { 
+        } 
+ 
+        </span><span class="s2">/** 
+         * Returns a new instance of this fragment for the given section 
+         * number. 
+         */</span><span class="s1"> 
+        </span><span class="s0">public static </span><span class="s1">PlaceholderFragment newInstance(</span><span class="s0">int </span><span class="s1">sectionNumber) { 
+            PlaceholderFragment fragment = </span><span class="s0">new </span><span class="s1">PlaceholderFragment(); 
+            Bundle args = </span><span class="s0">new </span><span class="s1">Bundle(); 
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber); 
+            fragment.setArguments(args); 
+            </span><span class="s0">return </span><span class="s1">fragment; 
+        } 
+ 
+        @Override 
+        </span><span class="s0">public </span><span class="s1">View onCreateView(LayoutInflater inflater, ViewGroup container, 
+                                 Bundle savedInstanceState) { 
+            View rootView = inflater.inflate(R.layout.fragment_main, container, </span><span class="s0">false</span><span class="s1">); 
+            TextView textView = (TextView) rootView.findViewById(R.id.section_label); 
+            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER))); 
+            </span><span class="s0">return </span><span class="s1">rootView; 
+        } 
+    } 
+ 
+    </span><span class="s2">/** 
+     * A {</span><span class="s4">@link </span><span class="s2">FragmentPagerAdapter} that returns a fragment corresponding to 
+     * one of the sections/tabs/pages. 
+     */</span><span class="s1"> 
+    </span><span class="s0">public class </span><span class="s1">SectionsPagerAdapter </span><span class="s0">extends </span><span class="s1">FragmentPagerAdapter { 
+ 
+        </span><span class="s0">public </span><span class="s1">SectionsPagerAdapter(FragmentManager fm) { 
+            </span><span class="s0">super</span><span class="s1">(fm); 
+        } 
+ 
+        @Override 
+        </span><span class="s0">public </span><span class="s1">Fragment getItem(</span><span class="s0">int </span><span class="s1">position) { 
+            </span><span class="s0">switch </span><span class="s1">(position){ 
+                </span><span class="s0">case </span><span class="s5">0</span><span class="s1">: 
+                    Tab1 tab1 = </span><span class="s0">new </span><span class="s1">Tab1(); 
+                    </span><span class="s0">return </span><span class="s1">tab1; 
+                </span><span class="s0">case </span><span class="s5">1</span><span class="s1">: 
+                    Tab2 tab2 = </span><span class="s0">new </span><span class="s1">Tab2(); 
+                    </span><span class="s0">return </span><span class="s1">tab2; 
+                </span><span class="s2">//  case 2:</span><span class="s1"> 
+                </span><span class="s2">//    Tab2 tab2 = new Tab2();</span><span class="s1"> 
+                </span><span class="s2">//      return tab2;</span><span class="s1"> 
+                </span><span class="s2">//case 3:</span><span class="s1"> 
+                </span><span class="s2">//  Tab3 tab3 = new Tab3();</span><span class="s1"> 
+                </span><span class="s2">//return tab3;</span><span class="s1"> 
+            } 
+            </span><span class="s0">return null</span><span class="s1">; 
+        } 
+ 
+ 
+ 
+        @Override 
+        </span><span class="s0">public int </span><span class="s1">getCount() { 
+            </span><span class="s2">// Show 2 total pages.</span><span class="s1"> 
+            </span><span class="s0">return </span><span class="s5">2</span><span class="s1">; 
+        } 
+    } 
+} 
+</span></pre>
+</body>
+</html>
